@@ -23,6 +23,8 @@ public class Order {
     private double totalAmount;
     private String paymentMethod;
     @Builder.Default private boolean paymentDone = false;
+    private String razorpayOrderId;     // Razorpay order ID (rzp_order_xxx)
+    private String razorpayPaymentId;   // Razorpay payment ID after success
     private String specialInstructions;
 
     // Agent assignment

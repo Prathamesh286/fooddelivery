@@ -16,7 +16,7 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis()+expiration))
                 .signWith(key(),SignatureAlgorithm.HS256).compact();
     }
-    public String extractUsername(String token) {
+    public String extractUsername(String token) { 
         return Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(token).getBody().getSubject();
     }
     public boolean validate(String token, UserDetails userDetails) {

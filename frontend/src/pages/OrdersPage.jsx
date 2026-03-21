@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Package, Clock, CheckCircle, XCircle, Bike, ChefHat, ShoppingBag, AlertTriangle, Key } from 'lucide-react'
 import { orderApi } from '../services/api'
 import toast from 'react-hot-toast'
@@ -106,11 +107,16 @@ export default function OrdersPage() {
                       <span>+ ₹{order.deliveryFee} delivery • </span>
                       <span className="font-bold text-night-200 text-sm">Total ₹{order.totalAmount?.toFixed(0)}</span>
                     </div>
-                    {order.status==='PENDING' && (
-                      <button onClick={()=>handleCancel(order.id)} disabled={cancelling===order.id} className="btn-danger text-sm">
-                        {cancelling===order.id?'Cancelling...':'Cancel Order'}
-                      </button>
-                    )}
+                    <div className="flex gap-2 flex-wrap">
+                      {!['DELIVERED','CANCELLED'].includes(order.status) && (
+                        <Link to={`/orders/${order.id}/track`} className="btn-ember text-xs py-1.5 px-3">🔍 Track</Link>
+                      )}
+                      {order.status==='PENDING' && (
+                        <button onClick={()=>handleCancel(order.id)} disabled={cancelling===order.id} className="btn-danger text-sm">
+                          {cancelling===order.id?'Cancelling...':'Cancel Order'}
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <p className="text-night-600 text-xs mt-2 flex items-center gap-1"><span>📍</span>{order.deliveryAddress}</p>
                   {order.deliveryAgentName && (

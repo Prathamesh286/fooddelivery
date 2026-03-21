@@ -61,7 +61,7 @@ public class DataInitializer implements CommandLineRunner {
         addItem(r5,"Edamame","Steamed salted soybeans – perfect starter",120,"https://images.unsplash.com/photo-1564834744159-ff0ea41ba4b9?w=400","Starter",true);
         addItem(r5,"Miso Soup","Traditional Japanese soup with tofu and seaweed",80,"https://images.unsplash.com/photo-1547592180-85f173990554?w=400","Soup",true);
 
-        System.out.println("✅ FoodRush DB seeded!");
+        System.out.println("✅ FoodDash DB seeded!");
         System.out.println("   customer@food.com / customer123");
         System.out.println("   owner@food.com    / owner123");
         System.out.println("   agent@food.com    / agent123");

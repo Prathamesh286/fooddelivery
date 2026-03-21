@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Star, Clock, Bike, MapPin, Plus, Minus, ShoppingCart, Leaf, Phone, ChevronLeft } from 'lucide-react'
-import { restaurantApi, menuApi, reviewApi } from '../services/api'
+import { Star, Clock, Bike, MapPin, Plus, Minus, ShoppingCart, Leaf, Phone, ChevronLeft, Heart } from 'lucide-react'
+import { restaurantApi, menuApi, reviewApi, favoritesApi } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
@@ -17,6 +17,7 @@ export default function RestaurantPage() {
   const [reviewForm, setReviewForm] = useState({ rating:5, comment:'' })
   const { cart, addToCart, removeFromCart, itemCount } = useCart()
   const { user } = useAuth()
+  const [isFav, setIsFav] = useState(false)
 
   useEffect(() => {
     Promise.all([restaurantApi.getById(id), menuApi.getByRestaurant(id), reviewApi.getByRestaurant(id)])
@@ -64,6 +65,17 @@ export default function RestaurantPage() {
               <h1 className="font-display text-4xl font-bold text-white mb-1">{restaurant.name}</h1>
               <p className="text-night-300 text-sm">{restaurant.cuisine} • {restaurant.openingHours}</p>
             </div>
+            <button
+              onClick={() => {
+                if (isFav) { favoritesApi.remove(restaurant.id); setIsFav(false); toast.success('Removed from favorites') }
+                else { favoritesApi.add(restaurant); setIsFav(true); toast.success('Added to favorites ❤️') }
+              }}
+              className="w-10 h-10  rounded-full flex items-center justify-center backdrop-blur-sm border transition-all hover:scale-110 "
+              style={{ background: isFav ? 'rgba(239,68,68,0.3)' : 'rgba(26,17,9,0.6)', borderColor: isFav ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.2)',  }}
+              title={isFav ? 'Remove from favorites' : 'Add to favorites'}
+            >
+              <Heart className={`w-5 h-5 ${isFav ? 'text-red-400 fill-red-400' : 'text-white'}`} />
+            </button>
             <div className="flex items-center gap-1.5 bg-night-950/80 backdrop-blur-sm border border-night-800 px-3 py-1.5 rounded-full">
               <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
               <span className="font-bold text-white">{restaurant.rating}</span>

@@ -23,6 +23,7 @@ public class OrderDto {
         private double subtotal,deliveryFee,totalAmount;
         private String paymentMethod,specialInstructions,deliveryOtp;
         private boolean paymentDone,otpVerified;
+        private String razorpayOrderId, razorpayPaymentId;
         private LocalDateTime createdAt,updatedAt,assignedAt,pickedUpAt,deliveredAt;
     }
 }
